@@ -19,6 +19,11 @@ class DBController {
   startNewRun(userid, seed) {
     //NEEDS ERROR CHECKING eventually. Don't just trust the user id.
     console.log("DBController.startNewRun");
+    // if userid is null, set to int value of 0 to represent guest
+    // TODO: handle guest userid if null, maybe update SQL schema instead
+    if(!userid) {
+      userid = 0;
+    }
     return new Promise((resolve, reject) => {
       let querystring = 'INSERT INTO run (userid_fk, seed, run_start) VALUES (?, ?, ?)'
       let q = db.query(querystring, [userid, seed, new Date()], (err, result) => {
@@ -35,8 +40,8 @@ class DBController {
 
   /**
    * During a run, get 3 options for the next 'server' to approach
-   * @param {int} userid 
-   * @param {int} runid 
+   * @param {int} userid
+   * @param {int} runid
    * @returns 3 server options
    */
   getServerSelection(userid, runid) {
@@ -62,10 +67,10 @@ class DBController {
   }
 
   /**
-   * 
+   *
    * @param {string} which_act expects "act_one" or "act_two", etc
    * @param {int} encounter_id the numerical id of the encounter in that act
-   * 
+   *
    * @returns an array containing instances of each enemy in the encounter
    */
   populateEncounterData(which_act, encounter_id) {
@@ -119,7 +124,7 @@ class DBController {
             if (err) {
               reject(err);
             }
-    
+
             resolve(result);
           });
         })
@@ -141,7 +146,7 @@ class DBController {
 
   /**
    * Grab all software item information from json reference file.
-   * @param {Number} id 
+   * @param {Number} id
    */
   getSoftwareDetailsById(id) {
     if(software_ref[id]) {
