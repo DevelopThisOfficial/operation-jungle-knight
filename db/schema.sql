@@ -19,7 +19,7 @@ CREATE TABLE users (
 -- DROP TABLE IF EXISTS run;
 CREATE TABLE run (
   id INT NOT NULL AUTO_INCREMENT,
-  userid_fk INT NOT NULL,
+  userid_fk INT DEFAULT NULL,
   act_num INT DEFAULT 1,
   encounter_num INT DEFAULT NULL,
   seed VARCHAR(255),

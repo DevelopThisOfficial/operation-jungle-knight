@@ -19,11 +19,7 @@ class DBController {
   startNewRun(userid, seed) {
     //NEEDS ERROR CHECKING eventually. Don't just trust the user id.
     console.log("DBController.startNewRun");
-    // if userid is null, set to int value of 0 to represent guest
-    // TODO: handle guest userid if null, maybe update SQL schema instead
-    if(!userid) {
-      userid = 0;
-    }
+    // Guest user id set to null in SQL schema
     return new Promise((resolve, reject) => {
       let querystring = 'INSERT INTO run (userid_fk, seed, run_start) VALUES (?, ?, ?)'
       let q = db.query(querystring, [userid, seed, new Date()], (err, result) => {
